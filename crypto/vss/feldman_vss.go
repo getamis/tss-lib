@@ -54,7 +54,7 @@ func Create(threshold int, secret *big.Int, indexes []*big.Int) (Vs, Shares, err
 		return nil, nil, ErrNumSharesBelowThreshold
 	}
 
-	testPoly := make([]*big.Int, 2)
+	testPoly := make([]*big.Int, 3)
 	for i := 0; i < len(testPoly); i++ {
 		testPoly[i] = big.NewInt(1)
 	}

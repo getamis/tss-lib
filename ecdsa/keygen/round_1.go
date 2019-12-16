@@ -10,7 +10,7 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/binance-chain/tss-lib/common"
+	// "github.com/binance-chain/tss-lib/common"
 	"github.com/binance-chain/tss-lib/crypto"
 	cmts "github.com/binance-chain/tss-lib/crypto/commitments"
 	"github.com/binance-chain/tss-lib/crypto/vss"
@@ -39,7 +39,8 @@ func (round *round1) Start() *tss.Error {
 	i := Pi.Index
 
 	// 1. calculate "partial" key share ui
-	ui := common.GetRandomPositiveInt(tss.EC().Params().N)
+	//ui := common.GetRandomPositiveInt(tss.EC().Params().N)
+	ui := big.NewInt(1)
 	round.temp.ui = ui
 
 	// 2. compute the vss shares
