@@ -119,13 +119,14 @@ func (round *round1) prepare() error {
 
 	xi := round.key.Xi
 	ks := round.key.Ks
+	ranks := round.key.Ranks
 	bigXs := round.key.BigXj
 
 	if round.Threshold()+1 > len(ks) {
 		// TODO: this should not panic
 		return fmt.Errorf("t+1=%d is not consistent with the key count %d", round.Threshold()+1, len(ks))
 	}
-	wi, bigWs := PrepareForSigning(i, len(ks), xi, ks, bigXs)
+	wi, bigWs := PrepareForSigning(i, len(ks), round.Threshold(), xi, ks, ranks, bigXs)
 
 	round.temp.w = wi
 	round.temp.bigWs = bigWs

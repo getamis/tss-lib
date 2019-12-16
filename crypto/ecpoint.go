@@ -24,6 +24,10 @@ type ECPoint struct {
 	coords [2]*big.Int
 }
 
+var (
+	ErrDIFFERENTLENGTH = errors.New("Different Length of Slices!")
+)
+
 // Creates a new ECPoint and checks that the given coordinates are on the elliptic curve.
 func NewECPoint(curve elliptic.Curve, X, Y *big.Int) (*ECPoint, error) {
 	if !isOnCurve(curve, X, Y) {
@@ -88,6 +92,50 @@ func isOnCurve(c elliptic.Curve, x, y *big.Int) bool {
 		return false
 	}
 	return c.IsOnCurve(x, y)
+}
+
+// Give two arrays: [a1,a2,a3] and points in secp256k1 [G1,G2,G3]. The outcome of this function is a1*G1+a2*G2+a3*G3 (i.e. linear combination of points by multiplying scalar.)
+// Ex: Give two arrays: [1,2,5] and points in secp256k1 [G1,G2,G3]. The outcome of this function is 1*G1+2*G2+5*G3.
+func ComputeLinearCombinationPoint(scalar []*big.Int, points []*ECPoint, curve elliptic.Curve) (*ECPoint, error) {
+
+	if len(scalar) != len(points) {
+		return nil, ErrDIFFERENTLENGTH
+	}
+
+	startIndex := 0
+	var result *ECPoint
+
+	for i := 0; i < len(scalar); i++ {
+		if scalar[i].Sign() != 0 && points[i].X() != nil && points[i].Y() != nil {
+			startIndex = i + 1
+			scalar[i].Mod(scalar[i], curve.Params().N)
+			result = points[i].ScalarMult(scalar[i])
+			break
+		}
+	}
+
+	for i := startIndex; i < len(scalar); i++ {
+
+		if scalar[i].Sign() == 0 {
+			continue
+		}
+		if points[i].X() == nil || points[i].Y() == nil {
+			continue
+		}
+
+		scalar[i].Mod(scalar[i], curve.Params().N)
+		var err error
+		temp := points[i].ScalarMult(scalar[i])
+
+		result, err = result.Add(temp)
+
+		if err != nil {
+			return nil, err
+		}
+
+	}
+
+	return result, nil
 }
 
 // ----- //

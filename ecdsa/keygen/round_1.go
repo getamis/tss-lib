@@ -40,15 +40,24 @@ func (round *round1) Start() *tss.Error {
 
 	// 1. calculate "partial" key share ui
 	ui := common.GetRandomPositiveInt(tss.EC().Params().N)
+	ui = big.NewInt(1)
 	round.temp.ui = ui
 
 	// 2. compute the vss shares
 	ids := round.Parties().IDs().Keys()
-	vs, shares, err := vss.Create(round.Threshold(), ui, ids)
+
+	// Test ranks
+	ranks := make([]uint, len(ids))
+	ranks[0] = 0
+	ranks[1] = 0
+	ranks[2] = 0
+
+	vs, shares, err := vss.Create(round.Threshold(), ui, ids, ranks)
 	if err != nil {
 		return round.WrapError(err, Pi)
 	}
 	round.save.Ks = ids
+	round.save.Ranks = ranks
 
 	// security: the original u_i may be discarded
 	ui = zero // clears the secret data from memory
@@ -84,6 +93,7 @@ func (round *round1) Start() *tss.Error {
 	// - VSS Vs
 	// - our set of Shamir shares
 	round.save.ShareID = ids[i]
+	round.save.rank = ranks[i]
 	round.temp.vs = vs
 	round.temp.shares = shares
 

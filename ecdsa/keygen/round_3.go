@@ -44,7 +44,7 @@ func (round *round3) Start() *tss.Error {
 	round.save.Xi = new(big.Int).Mod(xi, tss.EC().Params().N)
 
 	// 2-3.
-	Vc := make(vss.Vs, round.Threshold()+1)
+	Vc := make(vss.Vs, len(round.temp.vs))
 	for c := range Vc {
 		Vc[c] = round.temp.vs[c] // ours
 	}
@@ -87,6 +87,7 @@ func (round *round3) Start() *tss.Error {
 				Threshold: round.Threshold(),
 				ID:        round.PartyID().KeyInt(),
 				Share:     r2msg1.UnmarshalShare(),
+				Rank:      round.round1.save.Ranks[round.round1.PartyID().Index],
 			}
 			if ok = PjShare.Verify(round.Threshold(), PjVs); !ok {
 				ch <- vssOut{errors.New("vss verify failed"), nil}
@@ -131,7 +132,7 @@ func (round *round3) Start() *tss.Error {
 			}
 			// 10-11.
 			PjVs := vssResults[j].pjVs
-			for c := 0; c <= round.Threshold(); c++ {
+			for c := 0; c < len(Vc); c++ {
 				Vc[c], err = Vc[c].Add(PjVs[c])
 				if err != nil {
 					culprits = append(culprits, Pj)
@@ -146,22 +147,38 @@ func (round *round3) Start() *tss.Error {
 	// 12-16. compute Xj for each Pj
 	{
 		var err error
-		modQ := common.ModInt(tss.EC().Params().N)
+		//modQ := common.ModInt(tss.EC().Params().N)
 		culprits := make([]*tss.PartyID, 0, len(Ps)) // who caused the error(s)
 		bigXj := round.save.BigXj
 		for j := 0; j < round.PartyCount(); j++ {
-			Pj := round.Parties().IDs()[j]
-			kj := Pj.KeyInt()
-			BigXj := Vc[0]
-			z := new(big.Int).SetInt64(int64(1))
-			for c := 1; c <= round.Threshold(); c++ {
-				z = modQ.Mul(z, kj)
-				BigXj, err = BigXj.Add(Vc[c].ScalarMult(z))
-				if err != nil {
-					culprits = append(culprits, Pj)
-				}
+
+			var tagTemp vss.Tag
+			tagTemp.XCoord = round.Parties().IDs()[j].KeyInt()
+			tagTemp.DiffTime = int(round.save.Ranks[j])
+			deg := len(Vc) - 1
+			scalarSlice, _ := vss.GetLinearEquationCoefficient(tagTemp, deg)
+			bigXj[j], err = crypto.ComputeLinearCombinationPoint(scalarSlice, Vc, tss.EC())
+
+			if err != nil {
+				culprits = append(culprits, round.Parties().IDs()[j])
 			}
-			bigXj[j] = BigXj
+			/*
+				Pj := round.Parties().IDs()[j]
+				kj := Pj.KeyInt()
+
+
+
+				BigXj := Vc[0]
+				z := new(big.Int).SetInt64(int64(1))
+				for c := 1; c < len(Vc); c++ {
+					z = modQ.Mul(z, kj)
+					BigXj, err = BigXj.Add(Vc[c].ScalarMult(z))
+					if err != nil {
+						culprits = append(culprits, Pj)
+					}
+				}
+			*/
+			//bigXj[j] = BigXj
 		}
 		if len(culprits) > 0 {
 			return round.WrapError(errors.New("adding Vc[c].ScalarMult(z) to BigXj resulted in a point not on the curve"), culprits...)

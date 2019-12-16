@@ -23,7 +23,7 @@ const (
 	// To change these parameters, you must first delete the text fixture files in test/_fixtures/ and then run the keygen test alone.
 	// Then the signing and resharing tests will work with the new n, t configuration using the newly written fixture files.
 	TestParticipants = test.TestParticipants
-	TestThreshold    = test.TestParticipants / 2
+	TestThreshold    = test.TestThreshold
 )
 const (
 	testFixtureDirFormat  = "%s/../../test/_fixtures"
@@ -56,8 +56,10 @@ func LoadKeygenTestFixtures(count int) ([]LocalPartySaveData, error) {
 			LocalSecrets: LocalSecrets{
 				Xi:      key.Xi,
 				ShareID: key.ShareID,
+				rank:    key.rank,
 			},
 			Ks:          key.Ks[:count],
+			Ranks:       key.Ranks[:count],
 			NTildej:     key.NTildej[:count],
 			H1j:         key.H1j[:count],
 			H2j:         key.H2j[:count],

@@ -63,6 +63,7 @@ type (
 	LocalSecrets struct {
 		// secret fields (not shared, but stored locally)
 		Xi, ShareID *big.Int // xi, kj
+		rank        uint
 	}
 
 	// Everything in LocalPartySaveData is saved locally to user's HD when done
@@ -72,6 +73,9 @@ type (
 
 		// original indexes (ki in signing preparation phase)
 		Ks []*big.Int
+
+		// I add
+		Ranks []uint
 
 		// n-tilde, h1, h2 for range proofs
 		NTildej, H1j, H2j []*big.Int

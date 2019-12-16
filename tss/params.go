@@ -15,6 +15,7 @@ type (
 	Parameters struct {
 		partyID             *PartyID
 		parties             *PeerContext
+		rank                uint
 		partyCount          int
 		threshold           int
 		safePrimeGenTimeout time.Duration
@@ -23,6 +24,7 @@ type (
 	ReSharingParameters struct {
 		*Parameters
 		newParties    *PeerContext
+		rank          uint
 		newPartyCount int
 		newThreshold  int
 	}
@@ -54,6 +56,10 @@ func NewParameters(ctx *PeerContext, partyID *PartyID, partyCount, threshold int
 
 func (params *Parameters) Parties() *PeerContext {
 	return params.parties
+}
+
+func (params *Parameters) PartyRank() uint {
+	return params.rank
 }
 
 func (params *Parameters) PartyID() *PartyID {

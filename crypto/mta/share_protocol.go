@@ -109,6 +109,7 @@ func AliceEndWC(
 	cA, cB, NTildeA, h1A, h2A *big.Int,
 	sk *paillier.PrivateKey,
 ) (*big.Int, error) {
+
 	if !pf.Verify(pkA, NTildeA, h1A, h2A, cA, cB, B) {
 		return nil, errors.New("ProofBobWC.Verify() returned false")
 	}
