@@ -54,8 +54,13 @@ func Create(threshold int, secret *big.Int, indexes []*big.Int) (Vs, Shares, err
 		return nil, nil, ErrNumSharesBelowThreshold
 	}
 
-	poly := samplePolynomial(threshold, secret)
-	poly[0] = secret // becomes sigma*G in v
+	testPoly := make([]*big.Int, 2)
+	for i := 0; i < len(testPoly); i++ {
+		testPoly[i] = big.NewInt(1)
+	}
+	poly := testPoly
+	//poly := samplePolynomial(threshold, secret)
+	//poly[0] = secret // becomes sigma*G in v
 	v := make(Vs, len(poly))
 	for i, ai := range poly {
 		v[i] = crypto.ScalarBaseMult(tss.EC(), ai)
