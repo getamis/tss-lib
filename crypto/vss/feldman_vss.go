@@ -44,10 +44,6 @@ type Tag struct {
 	DiffTime int
 }
 
-
-
-
-
 var (
 	ErrNumSharesBelowThreshold             = fmt.Errorf("not enough shares to satisfy the threshold")
 	ErrDIFFERENTIALSHOULDBEPOSITIVEINTEGER = fmt.Errorf("The times of Differential should be a non-negative integer!")
@@ -73,13 +69,13 @@ func Create(threshold int, secret *big.Int, indexes []*big.Int, ranks []uint) (V
 	}
 
 	var poly Polynomial
-	//poly.coefficients = samplePolynomial(threshold, secret)
-	testPoly := make([]*big.Int, 3)
-	testPoly[0] = secret
-	testPoly[1] = big.NewInt(1)
-	testPoly[2] = big.NewInt(1)
+	poly.coefficients = samplePolynomial(threshold, secret)
+	//testPoly := make([]*big.Int, 3)
+	//testPoly[0] = secret
+	//testPoly[1] = big.NewInt(2)
+	//testPoly[2] = big.NewInt(1)
 
-	poly.coefficients = testPoly
+	//poly.coefficients = testPoly
 
 	poly.coefficients[0] = secret // becomes sigma*G in v
 	v := make(Vs, len(poly.coefficients))
@@ -150,37 +146,68 @@ func (share *Share) Verify(threshold int, vs Vs) bool {
 	return sigmaGi.Equals(v)
 }
 
-func (shares Shares) ReConstruct() (secret *big.Int, err error) {
-	
-	if shares != nil && shares[0].Threshold > len(shares) {
+func (shares Shares) ReConstruct(threshold int) (secret *big.Int, err error) {
+	if shares != nil && shares[0].Threshold >= len(shares) {
 		return nil, ErrNumSharesBelowThreshold
 	}
-	modN := common.ModInt(tss.EC().Params().N)
 
-	// x coords
-	xs := make([]*big.Int, 0)
-	for _, share := range shares {
-		xs = append(xs, share.ID)
+	tagList := make([]Tag, len(shares))
+
+	for i := 0; i < len(tagList); i++ {
+		tagList[i].XCoord = shares[i].ID
+		tagList[i].DiffTime = int(shares[i].Rank)
 	}
 
-	secret = big.NewInt(0)
-	for i, share := range shares {
-		times := one
-		for j := 0; j < len(xs); j++ {
-			if j == i {
-				continue
-			}
-			sub := modN.Sub(xs[j], share.ID)
-			subInv := modN.ModInverse(sub)
-			div := modN.Mul(xs[j], subInv)
-			times = modN.Mul(times, div)
+	birkhoffCoefficient, err := GetBirkhoffCiefficient(tagList, threshold+1)
+
+	if err != nil {
+		return nil, err
+	}
+
+	secret = new(big.Int).Mul(shares[0].Share, birkhoffCoefficient[0])
+
+	for i := 1; i < len(shares); i++ {
+		tempValue := new(big.Int).Mul(shares[i].Share, birkhoffCoefficient[i])
+		secret.Add(secret, tempValue)
+	}
+	secret.Mod(secret, tss.EC().Params().N)
+
+	if err != nil {
+		return nil, err
+	}
+	return secret, nil
+
+	/*
+		if shares != nil && shares[0].Threshold > len(shares) {
+			return nil, ErrNumSharesBelowThreshold
+		}
+		modN := common.ModInt(tss.EC().Params().N)
+
+		// x coords
+		xs := make([]*big.Int, 0)
+		for _, share := range shares {
+			xs = append(xs, share.ID)
 		}
 
-		fTimes := modN.Mul(share.Share, times)
-		secret = modN.Add(secret, fTimes)
-	}
+		secret = big.NewInt(0)
+		for i, share := range shares {
+			times := one
+			for j := 0; j < len(xs); j++ {
+				if j == i {
+					continue
+				}
+				sub := modN.Sub(xs[j], share.ID)
+				subInv := modN.ModInverse(sub)
+				div := modN.Mul(xs[j], subInv)
+				times = modN.Mul(times, div)
+			}
 
-	return secret, nil
+			fTimes := modN.Mul(share.Share, times)
+			secret = modN.Add(secret, fTimes)
+		}
+
+		return secret, nil
+	*/
 }
 
 /*
@@ -189,7 +216,7 @@ if shares != nil && shares[0].Threshold > len(shares) {
 		return nil, ErrNumSharesBelowThreshold
 	}
 
-	
+
 	tagList := make([]Tag, len(shares))
 
 	for i := 0; i < len(tagList); i++ {
@@ -197,7 +224,7 @@ if shares != nil && shares[0].Threshold > len(shares) {
 		tagList[i].DiffTime = int(shares[i].Rank)
 	}
 
-	
+
 		// x coords
 		xs := make([]*big.Int, 0)
 		for _, share := range shares {
@@ -220,7 +247,7 @@ if shares != nil && shares[0].Threshold > len(shares) {
 			fTimes := modN.Mul(share.Share, times)
 			secret = modN.Add(secret, fTimes)
 		}
-	
+
 
 	/*
 	birkhoffCoefficient, err := GetBirkhoffCiefficient(tagList, len(shares))
@@ -245,11 +272,6 @@ if shares != nil && shares[0].Threshold > len(shares) {
 
 
 */
-
-
-
-
-
 
 func samplePolynomial(threshold int, secret *big.Int) []*big.Int {
 	q := tss.EC().Params().N
@@ -315,7 +337,6 @@ func GetBirkhoffMatrix(tagSlice []Tag, threshold int) (*matrix.Matrix, error) {
 
 	birkhoffMatrix, _ := matrix.NewMatrix(tss.EC().Params().N, matrixBirkhoff)
 	result, err := birkhoffMatrix.Pseudoinverse()
-	fmt.Println(result.GetMatrix()[0][0])
 
 	if err != nil {
 		return nil, err

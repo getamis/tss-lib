@@ -80,7 +80,11 @@ func BobMidWC(
 	if err != nil {
 		return
 	}
+
 	beta = common.ModInt(q).Sub(zero, betaPrm)
+
+	//fmt.Println("b,B.X,B.Y:", b,B.X(),B.Y())
+
 	piB, err = ProveBobWC(pkA, NTildeA, h1A, h2A, cA, cB, b, betaPrm, cRand, B)
 	return
 }

@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/binance-chain/tss-lib/common"
+	// "github.com/binance-chain/tss-lib/common"
 	"github.com/binance-chain/tss-lib/crypto"
 	"github.com/binance-chain/tss-lib/crypto/vss"
 	"github.com/binance-chain/tss-lib/tss"
@@ -18,7 +18,7 @@ import (
 
 // PrepareForSigning(), GG18Spec (11) Fig. 14
 func PrepareForSigning(i, pax, threshold int, xi *big.Int, ks []*big.Int, ranks []uint, bigXs []*crypto.ECPoint) (wi *big.Int, bigWs []*crypto.ECPoint) {
-	modQ := common.ModInt(tss.EC().Params().N)
+	//modQ := common.ModInt(tss.EC().Params().N)
 	if len(ks) != len(bigXs) {
 		panic(fmt.Errorf("indices and bigX are not same length"))
 	}
@@ -32,7 +32,7 @@ func PrepareForSigning(i, pax, threshold int, xi *big.Int, ks []*big.Int, ranks 
 		tagSlice[j].XCoord = ks[j]
 		tagSlice[j].DiffTime = int(ranks[j])
 	}
-	birkhoff, _ := vss.GetBirkhoffCiefficient(tagSlice, threshold + 1)
+	birkhoff, _ := vss.GetBirkhoffCiefficient(tagSlice, threshold+1)
 
 	wi = xi
 	wi = new(big.Int).Mul(wi, birkhoff[i])
@@ -41,15 +41,15 @@ func PrepareForSigning(i, pax, threshold int, xi *big.Int, ks []*big.Int, ranks 
 	//fmt.Println(wi)
 	// 2-4.
 
-	wi = xi
-	for j := 0; j < pax; j++ {
-		if j == i {
-			continue
-		}
-		// big.Int Div is calculated as: a/b = a * modInv(b,q)
-		coef := modQ.Mul(ks[j], modQ.ModInverse(new(big.Int).Sub(ks[j], ks[i])))
-		wi = modQ.Mul(wi, coef)
-	}
+	//wi = xi
+	//for j := 0; j < pax; j++ {
+	//	if j == i {
+	//		continue
+	//	}
+	// big.Int Div is calculated as: a/b = a * modInv(b,q)
+	//	coef := modQ.Mul(ks[j], modQ.ModInverse(new(big.Int).Sub(ks[j], ks[i])))
+	//	wi = modQ.Mul(wi, coef)
+	//}
 	//fmt.Println(wi)
 
 	// 5-10.

@@ -61,6 +61,7 @@ func (round *round3) Start() *tss.Error {
 				errChs <- round.WrapError(err, Pj)
 			}
 		}(j, Pj)
+		
 		// Alice_end_wc
 		go func(j int, Pj *tss.PartyID) {
 			defer wg.Done()

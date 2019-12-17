@@ -10,6 +10,8 @@ import (
 	"fmt"
 	"math/big"
 	"sort"
+
+	"github.com/binance-chain/tss-lib/common"
 )
 
 type (
@@ -78,7 +80,7 @@ func SortPartyIDs(ids UnSortedPartyIDs, startAt ...int) SortedPartyIDs {
 // GenerateTestPartyIDs generates a list of mock PartyIDs for tests
 func GenerateTestPartyIDs(count int, startAt ...int) SortedPartyIDs {
 	ids := make(UnSortedPartyIDs, 0, count)
-	///key := common.MustGetRandomInt(256)
+	//key := common.MustGetRandomInt(256)
 	frm := 0
 	i := 0 // default `i`
 	if len(startAt) > 0 {
@@ -86,12 +88,13 @@ func GenerateTestPartyIDs(count int, startAt ...int) SortedPartyIDs {
 		i = startAt[0]
 	}
 	for ; i < count+frm; i++ {
+		key := common.GetRandomPositiveInt(big.NewInt(10000))
 		ids = append(ids, &PartyID{
 			MessageWrapper_PartyID: &MessageWrapper_PartyID{
 				Id:      fmt.Sprintf("%d", i+1),
 				Moniker: fmt.Sprintf("P[%d]", i+1),
 				//Key:     new(big.Int).Sub(key, big.NewInt(int64(count)-int64(i))).Bytes(),
-				Key: new(big.Int).SetInt64(int64(i + 1)).Bytes(),
+				Key: new(big.Int).Set(key).Bytes(),
 			},
 			Index: i,
 			// this key makes tests more deterministic

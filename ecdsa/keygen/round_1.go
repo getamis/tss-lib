@@ -40,7 +40,7 @@ func (round *round1) Start() *tss.Error {
 
 	// 1. calculate "partial" key share ui
 	ui := common.GetRandomPositiveInt(tss.EC().Params().N)
-	ui = big.NewInt(1)
+	//ui = big.NewInt(1)
 	round.temp.ui = ui
 
 	// 2. compute the vss shares
@@ -48,9 +48,10 @@ func (round *round1) Start() *tss.Error {
 
 	// Test ranks
 	ranks := make([]uint, len(ids))
-	ranks[0] = 0
-	ranks[1] = 0
-	ranks[2] = 0
+	ranks[0] = 1
+	//ranks[1] = 1
+	//ranks[2] = 0
+	//ranks[3] = 0
 
 	vs, shares, err := vss.Create(round.Threshold(), ui, ids, ranks)
 	if err != nil {

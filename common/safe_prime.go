@@ -22,6 +22,313 @@ const (
 	primeTestN = 30
 )
 
+var smallPrimesProduct2 = new(big.Int).SetUint64(6437928885641249269)
+var smallPrimes2 = []uint64{
+	59,
+	61,
+	67,
+	71,
+	73,
+	79,
+	83,
+	89,
+	97,
+}
+
+var smallPrimesProduct3 = new(big.Int).SetUint64(4343678784233766587)
+var smallPrimes3 = []uint64{
+	101,
+	103,
+	107,
+	109,
+	113,
+	127,
+	131,
+	137,
+	139,
+}
+
+var smallPrimesProduct4 = new(big.Int).SetUint64(538945254996352681)
+var smallPrimes4 = []uint64{
+	149,
+	151,
+	157,
+	163,
+	167,
+	173,
+	179,
+	181,
+}
+
+var smallPrimesProduct5 = new(big.Int).SetUint64(3534749459194562711)
+var smallPrimes5 = []uint64{
+	191,
+	193,
+	197,
+	199,
+	211,
+	223,
+	227,
+	229,
+}
+
+var smallPrimesProduct6 = new(big.Int).SetUint64(61247129307885343)
+var smallPrimes6 = []uint64{
+	233,
+	239,
+	241,
+	251,
+	257,
+	263,
+	269,
+}
+
+var smallPrimesProduct7 = new(big.Int).SetUint64(166996819598798201)
+var smallPrimes7 = []uint64{
+	271,
+	277,
+	281,
+	283,
+	293,
+	307,
+	311,
+}
+
+var smallPrimesProduct8 = new(big.Int).SetUint64(542676746453092519)
+var smallPrimes8 = []uint64{
+	317,
+	331,
+	337,
+	347,
+	349,
+	353,
+	359,
+}
+
+var smallPrimesProduct9 = new(big.Int).SetUint64(1230544604996048471)
+var smallPrimes9 = []uint64{
+	367,
+	373,
+	379,
+	383,
+	389,
+	397,
+	401,
+}
+
+var smallPrimesProduct10 = new(big.Int).SetUint64(2618501576975440661)
+var smallPrimes10 = []uint64{
+	409,
+	419,
+	421,
+	431,
+	433,
+	439,
+	443,
+}
+
+var smallPrimesProduct11 = new(big.Int).SetUint64(4771180125133726009)
+var smallPrimes11 = []uint64{
+	449,
+	457,
+	461,
+	463,
+	467,
+	479,
+	487,
+}
+
+var smallPrimesProduct12 = new(big.Int).SetUint64(9247077179230889629)
+var smallPrimes12 = []uint64{
+	491,
+	499,
+	503,
+	509,
+	521,
+	523,
+	541,
+}
+
+var smallPrimesProduct13 = new(big.Int).SetUint64(34508483876655991)
+var smallPrimes13 = []uint64{
+	557,
+	563,
+	569,
+	571,
+	577,
+	587,
+}
+
+var smallPrimesProduct14 = new(big.Int).SetUint64(49010633640532829)
+var smallPrimes14 = []uint64{
+	593,
+	599,
+	601,
+	607,
+	613,
+	617,
+}
+
+var smallPrimesProduct15 = new(big.Int).SetUint64(68015277240951437)
+var smallPrimes15 = []uint64{
+	619,
+	631,
+	641,
+	643,
+	647,
+	653,
+}
+
+var smallPrimesProduct16 = new(big.Int).SetUint64(93667592535644987)
+var smallPrimes16 = []uint64{
+	659,
+	661,
+	673,
+	677,
+	683,
+	691,
+}
+
+var smallPrimesProduct17 = new(big.Int).SetUint64(140726526226538479)
+var smallPrimes17 = []uint64{
+	701,
+	709,
+	719,
+	727,
+	733,
+	739,
+}
+
+var smallPrimesProduct18 = new(big.Int).SetUint64(191079950785756457)
+var smallPrimes18 = []uint64{
+	743,
+	751,
+	757,
+	761,
+	769,
+	773,
+}
+
+var smallPrimesProduct19 = new(big.Int).SetUint64(278064420037666463)
+var smallPrimes19 = []uint64{
+	787,
+	797,
+	809,
+	811,
+	821,
+	823,
+}
+
+var smallPrimesProduct20 = new(big.Int).SetUint64(361197734649700343)
+var smallPrimes20 = []uint64{
+	827,
+	829,
+	839,
+	853,
+	857,
+	859,
+}
+
+var smallPrimesProduct21 = new(big.Int).SetUint64(473672212426732757)
+var smallPrimes21 = []uint64{
+	863,
+	877,
+	881,
+	883,
+	887,
+	907,
+}
+
+var smallPrimesProduct22 = new(big.Int).SetUint64(649424689916978839)
+var smallPrimes22 = []uint64{
+	911,
+	919,
+	929,
+	937,
+	941,
+	947,
+}
+
+var smallPrimesProduct23 = new(big.Int).SetUint64(851648411420003101)
+var smallPrimes23 = []uint64{
+	953,
+	967,
+	971,
+	977,
+	983,
+	991,
+}
+
+var smallPrimesProduct24 = new(big.Int).SetUint64(1093086073730188481)
+var smallPrimes24 = []uint64{
+	997,
+	1009,
+	1013,
+	1019,
+	1021,
+	1031,
+}
+
+var smallPrimesProduct25 = new(big.Int).SetUint64(1334574190510722559)
+var smallPrimes25 = []uint64{
+	1033,
+	1039,
+	1049,
+	1051,
+	1061,
+	1063,
+}
+
+var smallPrimesProduct26 = new(big.Int).SetUint64(1676618685090439499)
+var smallPrimes26 = []uint64{
+	1069,
+	1087,
+	1091,
+	1093,
+	1097,
+	1103,
+}
+
+var smallPrimesProduct27 = new(big.Int).SetUint64(2084313533279411653)
+var smallPrimes27 = []uint64{
+	1109,
+	1117,
+	1123,
+	1129,
+	1151,
+	1153,
+}
+
+var smallPrimesProduct28 = new(big.Int).SetUint64(2735398959845680783)
+var smallPrimes28 = []uint64{
+	1163,
+	1171,
+	1181,
+	1187,
+	1193,
+	1201,
+}
+
+var smallPrimesProduct29 = new(big.Int).SetUint64(3378760991971399829)
+var smallPrimes29 = []uint64{
+	1213,
+	1217,
+	1223,
+	1229,
+	1231,
+	1237,
+}
+
+var smallPrimesProduct30 = new(big.Int).SetUint64(4247458888134038011)
+var smallPrimes30 = []uint64{
+	1249,
+	1259,
+	1277,
+	1279,
+	1283,
+	1289,
+}
+
 type (
 	GermainSafePrime struct {
 		q,
@@ -224,6 +531,8 @@ func runGenPrimeRoutine(
 	bytes := make([]byte, (qBitLen+7)/8)
 	p := new(big.Int)
 	q := new(big.Int)
+	Big1 := big.NewInt(1)
+	Big2 := big.NewInt(2)
 
 	bigMod := new(big.Int)
 
@@ -271,11 +580,27 @@ func runGenPrimeRoutine(
 				bigMod.Mod(q, smallPrimesProduct)
 				mod := bigMod.Uint64()
 
+				mod3 := mod % 3
+				if mod3 == 1 {
+					q.Add(q, Big1)
+					mod = bigMod.Mod(q, smallPrimesProduct).Uint64()
+				} else if mod3 == 0 {
+					q.Add(q, Big2)
+					mod = bigMod.Mod(q, smallPrimesProduct).Uint64()
+				}
+
 			NextDelta:
-				for delta := uint64(0); delta < 1<<20; delta += 2 {
+				for delta := uint64(0); delta < 1<<20; delta += 6 {
 					m := mod + delta
 					for _, prime := range smallPrimes {
-						if m%uint64(prime) == 0 && (qBitLen > 6 || m != uint64(prime)) {
+						primeInt64 := uint64(prime)
+						residue := m % primeInt64
+						if residue == 0 && (qBitLen > 6 || m != primeInt64) {
+							continue NextDelta
+						}
+
+						r := primeInt64 >> 1
+						if residue == r {
 							continue NextDelta
 						}
 					}
@@ -298,15 +623,85 @@ func runGenPrimeRoutine(
 					// p = 2q + 1 = 2(3q' + 1) + 1 = 6q' + 2 + 1 = 6q' + 3 =
 					//   = 3(2q' + 1)
 					// So `p` is a multiple of `3`.
-					qMod3 := new(big.Int).Mod(q, big.NewInt(3))
-					if qMod3.Cmp(big.NewInt(1)) == 0 {
-						continue NextDelta
-					}
 
 					// p = 2q+1
-					p.Mul(q, big.NewInt(2))
-					p.Add(p, big.NewInt(1))
-					if !isPrimeCandidate(p) {
+					p.Lsh(q, 1)
+					p.Add(p, Big1)
+
+					resediueP := new(big.Int).Mod(q, smallPrimesProduct).Uint64()
+
+					for i := 0; i < len(smallPrimes); i++ {
+						nmod := resediueP % uint64(smallPrimes[i])
+						r := uint64(smallPrimes[i]) >> 1
+						if nmod == r || nmod == 0 {
+							continue NextDelta
+						}
+					}
+
+					if !isPossibleSafePrime(p, q, smallPrimesProduct2, smallPrimes2) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct3, smallPrimes3) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct4, smallPrimes4) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct5, smallPrimes5) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct6, smallPrimes6) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct7, smallPrimes7) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct8, smallPrimes8) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct9, smallPrimes9) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct10, smallPrimes10) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct11, smallPrimes11) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct12, smallPrimes12) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct13, smallPrimes13) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct14, smallPrimes14) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct15, smallPrimes15) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct16, smallPrimes16) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct17, smallPrimes17) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct18, smallPrimes18) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct19, smallPrimes19) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct20, smallPrimes20) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct21, smallPrimes21) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct22, smallPrimes22) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct23, smallPrimes23) {
 						continue NextDelta
 					}
 
@@ -342,10 +737,31 @@ func isPocklingtonCriterionSatisfied(p *big.Int) bool {
 	).Cmp(big.NewInt(1)) == 0
 }
 
+/*
 func isPrimeCandidate(number *big.Int) bool {
 	m := new(big.Int).Mod(number, smallPrimesProduct).Uint64()
 	for _, prime := range smallPrimes {
 		if m%uint64(prime) == 0 && m != uint64(prime) {
+			return false
+		}
+	}
+	return true
+}
+*/
+
+func isPossibleSafePrime(p, q, product *big.Int, primeList []uint64) bool {
+
+	modP := new(big.Int).Mod(p, product).Uint64()
+	modQ := new(big.Int).Mod(q, product).Uint64()
+	for i := 0; i < len(primeList); i++ {
+		r := primeList[i] >> 1
+		resediueBigQ := modQ % primeList[i]
+		resediueBigP := modP % primeList[i]
+
+		if resediueBigQ == r || resediueBigQ == 0 {
+			return false
+		}
+		if resediueBigP == r || resediueBigP == 0 {
 			return false
 		}
 	}
