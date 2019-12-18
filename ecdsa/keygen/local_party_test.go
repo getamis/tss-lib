@@ -22,7 +22,7 @@ import (
 
 	"github.com/binance-chain/tss-lib/common"
 	"github.com/binance-chain/tss-lib/crypto"
-	"github.com/binance-chain/tss-lib/crypto/paillier"
+	// "github.com/binance-chain/tss-lib/crypto/paillier"
 	"github.com/binance-chain/tss-lib/crypto/vss"
 	"github.com/binance-chain/tss-lib/test"
 	"github.com/binance-chain/tss-lib/tss"
@@ -39,6 +39,7 @@ func setUp(level string) {
 	}
 }
 
+/*
 func TestStartRound1Paillier(t *testing.T) {
 	setUp("debug")
 
@@ -129,6 +130,7 @@ func TestBadMessageCulprits(t *testing.T) {
 		"task keygen, party {0,P[1]}, round 1, culprits [{1,P[2]}]: message failed ValidateBasic: Type: binance.tss-lib.ecdsa.keygen.KGRound1Message, From: {1,P[2]}, To: all",
 		err.Error())
 }
+*/
 
 func TestE2EConcurrentAndSaveFixtures(t *testing.T) {
 	setUp("info")
