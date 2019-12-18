@@ -704,6 +704,27 @@ func runGenPrimeRoutine(
 					if !isPossibleSafePrime(p, q, smallPrimesProduct23, smallPrimes23) {
 						continue NextDelta
 					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct24, smallPrimes24) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct25, smallPrimes25) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct26, smallPrimes26) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct27, smallPrimes27) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct28, smallPrimes28) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct29, smallPrimes29) {
+						continue NextDelta
+					}
+					if !isPossibleSafePrime(p, q, smallPrimesProduct30, smallPrimes30) {
+						continue NextDelta
+					}
 
 					break
 				}
